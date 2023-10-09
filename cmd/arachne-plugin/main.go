@@ -15,7 +15,9 @@ func main() {
 
 // hello will callback the host and return the payload
 func hello(payload []byte) ([]byte, error) {
-	fmt.Println("hello called")
+
+	//This will print in the host processes stdout
+	fmt.Print("hello called")
 
 	// Make a host call to capitalize the name.
 	nameBytes, err := wapc.HostCall("", "example", "capitalize", payload)
