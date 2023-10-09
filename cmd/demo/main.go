@@ -28,7 +28,7 @@ func main() {
 	ctx := context.Background()
 
 	// Read the wasm plugin file
-	guest, err := os.ReadFile("./plugin/arachne_plugin.wasm")
+	guest, err := os.ReadFile("./plugin/arachne-plugin.wasm")
 
 	// Check for errors in reading the file
 	if err != nil {

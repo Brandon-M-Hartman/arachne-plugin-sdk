@@ -12,4 +12,4 @@ build-demo:
 	@$(MAKE) -C cmd/demo $(OP)
 
 build-plugin:
-	@$(MAKE) -C cmd/arachne_plugin build
+	@$(MAKE) -C cmd/arachne-plugin build
