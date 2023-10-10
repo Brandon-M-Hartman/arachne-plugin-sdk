@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log/slog"
 	"os"
 
 	"github.com/wapc/wapc-go/engines/wazero"
@@ -11,6 +12,18 @@ import (
 
 	"github.com/wapc/wapc-go"
 )
+
+// Used to configure logging error sources - see logging.go for more info
+const AppEnv = "dev"
+
+type SlogWriter struct {
+	*slog.Logger
+}
+
+func (sw *SlogWriter) Write(p []byte) (n int, err error) {
+	sw.Info(string(p))
+	return len(p), nil
+}
 
 // Main function of the program
 func main() {
@@ -38,10 +51,10 @@ func main() {
 	// Initialize the wasm engine
 	engine := wazero.Engine()
 
-	// Create a new module with the wasm engine, host function, wasm file and module configuration
+	// Create a new module with the wasm engine, host function, wasm file and module configuration, logging to the global logger.
 	module, err := engine.New(ctx, host, guest, &wapc.ModuleConfig{
 		Logger: wapc.PrintlnLogger,
-		Stdout: os.Stdout,
+		Stdout: &SlogWriter{slog.Default()},
 		Stderr: os.Stderr,
 	})
 

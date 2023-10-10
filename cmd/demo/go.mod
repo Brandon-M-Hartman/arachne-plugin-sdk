@@ -5,6 +5,7 @@ go 1.21.2
 require (
 	github.com/wapc/wapc-go v0.6.2
 	golang.org/x/text v0.3.3
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
 require (
