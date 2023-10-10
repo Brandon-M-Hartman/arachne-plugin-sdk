@@ -1,4 +1,4 @@
-module arachneplugin
+module arachne-plugin
 
 go 1.21.2
 

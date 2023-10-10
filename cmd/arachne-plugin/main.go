@@ -1,39 +1,32 @@
 package main
 
 import (
-	"fmt"
-
 	wapc "github.com/wapc/wapc-guest-tinygo"
 )
 
-func main() {
-	// Register echo and fail functions
-	wapc.RegisterFunctions(wapc.Functions{
-		"hello": hello,
-	})
+type ArachnePlugin struct {
+	funcs   []interface{}
+	funcMap wapc.Functions
 }
 
-// hello will callback the host and return the payload
-func hello(payload []byte) ([]byte, error) {
+// Keep main.go pretty simple so you can follow the code of your plugin easier.
 
-	//This will print in the host processes stdout
-	fmt.Print("hello called")
+func main() {
 
-	// Make a host call to capitalize the name.
-	nameBytes, err := wapc.HostCall("", "example", "capitalize", payload)
-	if err != nil {
-		return nil, err
+	arachne_plugin := ArachnePlugin{}
+
+	// Add functions to the slice. Whenever we write a new function, we need to add it here.
+	arachne_plugin.funcs = append(arachne_plugin.funcs, Hello)
+	arachne_plugin.funcs = append(arachne_plugin.funcs, Goodbye)
+
+	// Only put non-mandatory functions here, the mandatory ones are implemented in ImplementRequiredFunctions, called below.
+	arachne_plugin.funcMap = wapc.Functions{
+		"Hello":   Hello,
+		"Goodbye": Goodbye,
 	}
 
-	// Make a second host call to try out the other case
-	sseBytes, err2 := wapc.HostCall("", "example", "say something else", payload)
-	if err2 != nil {
-		return nil, err2
-	}
+	// This line is mandatory, and should go AFTER you've declared your functions above. Without your plugin implementing the scaffolding functions, Arachne won't accept it and it won't be allowed to run.
+	ImplementRequiredFunctions(&arachne_plugin)
 
-	// Format the message.
-	msg := "Hello there, " + string(nameBytes) + ", also: " + string(sseBytes)
-
-	// Return the message in byte format
-	return []byte(msg), nil
+	wapc.RegisterFunctions(arachne_plugin.funcMap)
 }
