@@ -3,7 +3,7 @@ module arachne-plugin
 go 1.21.3
 
 require (
-	github.com/getarachne/arachne-plugin-sdk v0.0.0-20231011222857-213e506190a2
+	github.com/getarachne/arachne-plugin-sdk v0.0.0-20231011222944-51292b8ac371
 	github.com/wapc/wapc-guest-tinygo v0.3.3
 )
 

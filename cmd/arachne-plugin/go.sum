@@ -10,6 +10,8 @@ github.com/getarachne/arachne-plugin-sdk v0.0.0-20231011221653-1ad4eff9e681 h1:V
 github.com/getarachne/arachne-plugin-sdk v0.0.0-20231011221653-1ad4eff9e681/go.mod h1:9YVfkXWXEr0Jt4llfgvgrKzNLCKBeoSB/zQhLZh9ZS8=
 github.com/getarachne/arachne-plugin-sdk v0.0.0-20231011222857-213e506190a2 h1:cupH9PLm/N+0ncI0aXu8ypRZZyk9cwyve7Fjza5i/3U=
 github.com/getarachne/arachne-plugin-sdk v0.0.0-20231011222857-213e506190a2/go.mod h1:AAR8/zsBV6Y2CeBSkmHl+yKJw5M7RQXqPlmZGYazLYI=
+github.com/getarachne/arachne-plugin-sdk v0.0.0-20231011222944-51292b8ac371 h1:C7P/NSpiusL0LnkgEhjx5vV//b7cwZxchR/9WEtQXm8=
+github.com/getarachne/arachne-plugin-sdk v0.0.0-20231011222944-51292b8ac371/go.mod h1:AAR8/zsBV6Y2CeBSkmHl+yKJw5M7RQXqPlmZGYazLYI=
 github.com/philhofer/fwd v1.1.1/go.mod h1:gk3iGcWd9+svBvR0sR+KPcfE+RNWozjowpeBVG3ZVNU=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=

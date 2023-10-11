@@ -8,7 +8,18 @@ else
 
 endif
 
-build-wasm: build-demo build-plugin
+build-wasm: update-mods build-demo build-plugin
+
+update-mods:
+	@echo "Updating go.mod files"
+	@go mod tidy
+	go get -u ./...
+	cd cmd/demo
+	@go mod tidy
+	go get -u ./...
+	cd cmd/arachne-plugin
+	@go mod tidy
+	go get -u ./...
 
 build-demo:
 	@$(MAKE) -C cmd/demo $(OP)
