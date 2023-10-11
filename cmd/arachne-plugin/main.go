@@ -4,16 +4,10 @@ import (
 	wapc "github.com/wapc/wapc-guest-tinygo"
 )
 
-type ArachnePlugin struct {
-	funcs   []interface{}
-	funcMap wapc.Functions
-}
-
 // Keep main.go pretty simple so you can follow the code of your plugin easier.
-
 func main() {
 
-	arachne_plugin := ArachnePlugin{}
+	arachne_plugin = ArachnePluginRegister{}
 
 	// Add functions to the slice. Whenever we write a new function, we need to add it here.
 	arachne_plugin.funcs = append(arachne_plugin.funcs, Hello)
