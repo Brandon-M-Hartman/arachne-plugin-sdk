@@ -6,7 +6,6 @@ else
 	SHELL := /bin/bash
 	OP = build_on_linux
 
-
 endif
 
 build: build-binary
