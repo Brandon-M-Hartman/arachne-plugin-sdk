@@ -2,7 +2,12 @@ package plugin_funcs
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"html"
 	"os"
+	"reflect"
+	"strings"
 
 	"log/slog"
 
@@ -43,7 +48,7 @@ func UnloadPlugin(a *arachne_plugin_scaffold.ArachnePlugin) {
 }
 
 // Load an individual plugin
-func LoadPlugin(plugin_name string, plugin_path string, host_function wapc.HostCallHandler) (context.Context, wapc.Module, wapc.Instance, error) {
+func LoadPlugin(plugin_name string, plugin_path string, host_function wapc.HostCallHandler) (*arachne_plugin_scaffold.ArachnePlugin, error) {
 
 	// Create a new context
 	ctx := context.Background()
@@ -53,7 +58,7 @@ func LoadPlugin(plugin_name string, plugin_path string, host_function wapc.HostC
 
 	// Check for errors in reading the file
 	if err != nil {
-		return nil, nil, nil, err
+		return &arachne_plugin_scaffold.ArachnePlugin{}, err
 	}
 
 	// Initialize the wasm engine
@@ -65,7 +70,7 @@ func LoadPlugin(plugin_name string, plugin_path string, host_function wapc.HostC
 	// Check for errors in instantiating the module
 	if err != nil {
 		slog.Error("Error occurred while instantiating plugin module.", "type", "PLUGIN", "plugin_name", plugin_name, "error", err.Error())
-		return nil, nil, nil, err
+		return &arachne_plugin_scaffold.ArachnePlugin{}, err
 	}
 
 	fsvar := os.DirFS("./expose_to_plugin")
@@ -83,11 +88,21 @@ func LoadPlugin(plugin_name string, plugin_path string, host_function wapc.HostC
 	// Check for errors in instantiating the instance
 	if err != nil {
 		slog.Error("Error occurred while instantiating plugin instance.", "type", "PLUGIN", "plugin_name", plugin_name, "error", err.Error())
-		return nil, nil, nil, err
+		return &arachne_plugin_scaffold.ArachnePlugin{}, err
 	}
 
-	return ctx, *module, instance, nil
+	plugin := arachne_plugin_scaffold.ArachnePlugin{
+		Context:  &ctx,
+		Module:   module,
+		Instance: &instance,
+	}
 
+	val_err := ValidatePlugin(&plugin)
+	if val_err != nil {
+		slog.Error("Plugin validation failed.", "type", "PLUGIN", "plugin_name", plugin_name, "plugin_path", plugin_path, "error", val_err.Error())
+	}
+
+	return &plugin, nil
 }
 
 func CreateModule(engine *wapc.Engine, guest *[]byte, ctx context.Context, HostFunction wapc.HostCallHandler) (*wapc.Module, error) {
@@ -99,4 +114,71 @@ func CreateModule(engine *wapc.Engine, guest *[]byte, ctx context.Context, HostF
 	})
 
 	return &module, err
+}
+
+// Run plugin validation
+func ValidatePlugin(p *arachne_plugin_scaffold.ArachnePlugin) error {
+
+	slog.Debug("Validating a plugin.", "type", "PLUGIN")
+
+	instance := p.Instance
+
+	// Invoke the function in the wasm module with the input as argument
+	resp, err := InvokePluginByInstance(instance, "", "DescribePlugin")
+
+	// Create a new instance of the PluginInfo message
+	info := &arachne_plugin_scaffold.PluginInfo{}
+
+	// Check for errors in invoking the function
+	if err != nil {
+		return err
+	}
+
+	// Validate that the response is a valid JSON
+	if !json.Valid(resp) {
+		return fmt.Errorf("invalid JSON received from the plugin")
+	}
+
+	// Unmarshal the data into a map first to check for unexpected fields
+	var data map[string]interface{}
+	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return err
+	}
+
+	// Check for unexpected fields in the JSON data
+	for key := range data {
+		structType := reflect.TypeOf(info).Elem()
+		_, ok := structType.FieldByNameFunc(func(s string) bool {
+			field, _ := structType.FieldByName(s)
+			return strings.EqualFold(field.Tag.Get("json"), key)
+		})
+		if !ok {
+			return fmt.Errorf("unexpected field %s in JSON data", key)
+		}
+	}
+
+	// Now unmarshal the data into the PluginInfo struct
+	err = json.Unmarshal(resp, info)
+	if err != nil {
+		return err
+	}
+
+	// Print the plugin description
+	slog.Debug("Plugin Name: " + info.PluginName)
+	slog.Debug("Developer Identity: " + info.DeveloperIdentity)
+	slog.Debug("Plugin URL: " + info.PluginUrl)
+	slog.Debug("Plugin Version: " + info.PluginVersion)
+	slog.Debug("Plugin Description: " + info.PluginDescription)
+	for _, function := range info.PluginFunctions {
+		sanitizedFunction := html.EscapeString(function)
+		slog.Debug("Available Plugin Function: " + sanitizedFunction)
+	}
+
+	p.PluginInfo = info
+
+	// Log the result of the function invocation
+	slog.Debug("Plugin passed validation.", "type", "PLUGIN", "plugin", p.PluginInfo.PluginName)
+
+	return nil
 }
