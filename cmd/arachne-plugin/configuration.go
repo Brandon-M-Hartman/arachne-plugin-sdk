@@ -1,12 +1,14 @@
 package main
 
-const plugin_name = "Arachne Demo Plugin"
+var PluginName string
 
-const dev_identity = "Brandon Hartman"
+var PluginDevIdentity string
 
-const plugin_url = "https://github.com/getarachne/arachne-plugin-sdk"
+var PluginUrl string
 
 // Should be a semver-compatible string (https://semver.org/), not a number.
-const pluginVersion = "0.0.1"
+var PluginVersion string
 
-const description = "A demo plugin for Arachne, to help developers understand how they can make their own plugins."
+var PluginDescription string
+
+var PluginBuildTime string

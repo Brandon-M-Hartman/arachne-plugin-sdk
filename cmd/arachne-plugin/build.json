@@ -1,0 +1,7 @@
+{
+  "PluginName": "Arachne Demo Plugin",
+  "PluginDevIdentity": "Brandon Hartman",
+  "PluginUrl": "https://github.com/getarachne/arachne-plugin-sdk",
+  "PluginVersion": "0.0.1",
+  "PluginDescription": "A demo plugin for Arachne, to help developers understand how they can make their own plugins."
+}

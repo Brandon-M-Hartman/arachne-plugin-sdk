@@ -15,9 +15,10 @@ type ArachnePlugin struct {
 
 type PluginInfo struct {
 	PluginName        string   `json:"plugin_name" validate:"required,alphanumunicode,max=40,min=1"`
-	DeveloperIdentity string   `json:"developer_identity" validate:"required,alphanumunicode,max=40,min=1"`
+	PluginDevIdentity string   `json:"developer_identity" validate:"required,alphanumunicode,max=40,min=1"`
 	PluginUrl         string   `json:"plugin_url" validate:"url,max=40,min=6"`
 	PluginVersion     string   `json:"plugin_version" validate:"required,semver,max=14,min=5"`
+	PluginBuildTime   string   `json:"plugin_build_time" validate:"required,datetime"`
 	PluginDescription string   `json:"plugin_description" validate:"required,alphanumunicode,max=256,min=1"`
 	PluginFunctions   []string `json:"plugin_functions" validate:"required,alphanum,max=256,min=1"`
 }

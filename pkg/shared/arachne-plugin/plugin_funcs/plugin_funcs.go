@@ -119,7 +119,7 @@ func CreateModule(engine *wapc.Engine, guest *[]byte, ctx context.Context, HostF
 // Run plugin validation
 func ValidatePlugin(p *arachne_plugin_scaffold.ArachnePlugin) error {
 
-	slog.Debug("Validating a plugin.", "type", "PLUGIN")
+	slog.Debug("Validating a plugin...", "type", "PLUGIN")
 
 	instance := p.Instance
 
@@ -139,14 +139,14 @@ func ValidatePlugin(p *arachne_plugin_scaffold.ArachnePlugin) error {
 		return fmt.Errorf("invalid JSON received from the plugin")
 	}
 
-	// Unmarshal the data into a map first to check for unexpected fields
+	// Unmarshal the JSON response into a map to convert it into a Go data structure
 	var data map[string]interface{}
 	err = json.Unmarshal(resp, &data)
 	if err != nil {
 		return err
 	}
 
-	// Check for unexpected fields in the JSON data
+	// Iterate over the keys in the map and check if each key corresponds to a field in the PluginInfo struct
 	for key := range data {
 		structType := reflect.TypeOf(info).Elem()
 		_, ok := structType.FieldByNameFunc(func(s string) bool {
@@ -166,7 +166,7 @@ func ValidatePlugin(p *arachne_plugin_scaffold.ArachnePlugin) error {
 
 	// Print the plugin description
 	slog.Debug("Plugin Name: " + info.PluginName)
-	slog.Debug("Developer Identity: " + info.DeveloperIdentity)
+	slog.Debug("Developer Identity: " + info.PluginDevIdentity)
 	slog.Debug("Plugin URL: " + info.PluginUrl)
 	slog.Debug("Plugin Version: " + info.PluginVersion)
 	slog.Debug("Plugin Description: " + info.PluginDescription)

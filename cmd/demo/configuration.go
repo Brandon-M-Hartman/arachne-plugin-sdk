@@ -13,7 +13,7 @@ var config Config
 func init() {
 	config = Config{}
 	config.plugin_name = "arachne-plugin"
-	config.plugin_path = "C:/Users/bhartman/git/arachne-plugin-sdk/bin/wasm/arachne-plugin.wasm"
+	config.plugin_path = "../wasm/arachne-plugin.wasm"
 	config.LogLevel = "Debug"
 	config.LogFilePath = "./arachne-plugin.log"
 

@@ -40,11 +40,12 @@ func DescribePlugin(payload []byte) ([]byte, error) {
 
 	// Create a new instance of the PluginInfo message
 	info := &arachne_plugin_scaffold.PluginInfo{
-		PluginName:        plugin_name,
-		DeveloperIdentity: dev_identity,
-		PluginUrl:         plugin_url,
-		PluginVersion:     pluginVersion,
-		PluginDescription: description,
+		PluginName:        PluginName,
+		PluginDevIdentity: PluginDevIdentity,
+		PluginUrl:         PluginUrl,
+		PluginVersion:     PluginVersion,
+		PluginBuildTime:   PluginBuildTime,
+		PluginDescription: PluginDescription,
 		PluginFunctions:   funcNames,
 	}
 
