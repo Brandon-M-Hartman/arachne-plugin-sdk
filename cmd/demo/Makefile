@@ -16,7 +16,7 @@ build_on_linux:
 	@echo "----------"
 	@echo "Building Demo Executable (Linux64)"
 	@echo "----------"
-	@GOOS=linux GOARCH=amd6 go build -o ../../bin/linux64/demo .
+	@GOOS=linux GOARCH=amd64 go build -o ../../bin/linux64/demo .
 	
 update-mods:
 	@echo "Updating demo go.mod..."
