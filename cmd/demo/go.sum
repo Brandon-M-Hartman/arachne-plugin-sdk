@@ -6,6 +6,8 @@ github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/getarachne/arachne-plugin-sdk v0.0.0-20231012145602-80a5d45fae00 h1:Prppj6p0I9O7qdZA7Q3AKJW0S9KJVmK7/DL5aXLThXA=
 github.com/getarachne/arachne-plugin-sdk v0.0.0-20231012145602-80a5d45fae00/go.mod h1:AAR8/zsBV6Y2CeBSkmHl+yKJw5M7RQXqPlmZGYazLYI=
+github.com/getarachne/arachne-plugin-sdk v0.0.0-20231012154053-1b6338db0b81 h1:Y/sgMmzynEoHclTwqH5dRuBWgutQ+M0H9yDSkbB+d34=
+github.com/getarachne/arachne-plugin-sdk v0.0.0-20231012154053-1b6338db0b81/go.mod h1:8SEldWhUBd3KIldd7orpGDwGuO5fQvL3ciK6Xn2TCag=
 github.com/philhofer/fwd v1.1.1/go.mod h1:gk3iGcWd9+svBvR0sR+KPcfE+RNWozjowpeBVG3ZVNU=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=

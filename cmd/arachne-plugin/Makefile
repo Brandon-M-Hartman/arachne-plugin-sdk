@@ -4,7 +4,7 @@ ifeq ($(OS),Windows_NT)
 	SHELL = cmd
 	OP = build_on_windows
 	PLUGIN_NAME=$(shell powershell -Command "(Get-Content -Raw -Path $(JSONFILE) | ConvertFrom-Json).PluginName")
-	DEVELOPER_IDENTITY=$(shell powershell -Command "(Get-Content -Raw -Path $(JSONFILE) | ConvertFrom-Json).DeveloperIdentity")
+	DEVELOPER_IDENTITY=$(shell powershell -Command "(Get-Content -Raw -Path $(JSONFILE) | ConvertFrom-Json).PluginDevIdentity")
 	PLUGIN_URL=$(shell powershell -Command "(Get-Content -Raw -Path $(JSONFILE) | ConvertFrom-Json).PluginUrl")
 	PLUGIN_VERSION=$(shell powershell -Command "(Get-Content -Raw -Path $(JSONFILE) | ConvertFrom-Json).PluginVersion")
 	PLUGIN_DESCRIPTION=$(shell powershell -Command "(Get-Content -Raw -Path $(JSONFILE) | ConvertFrom-Json).PluginDescription")
@@ -13,7 +13,7 @@ else
 	SHELL = /bin/bash
 	OP = build_on_linux
 	PLUGIN_NAME=$(shell jq -r '.PluginName' $(JSONFILE))
-	DEVELOPER_IDENTITY=$(shell jq -r '.DeveloperIdentity' $(JSONFILE))
+	DEVELOPER_IDENTITY=$(shell jq -r '.PluginDevIdentity' $(JSONFILE))
 	PLUGIN_URL=$(shell jq -r '.PluginUrl' $(JSONFILE))
 	PLUGIN_VERSION=$(shell jq -r '.PluginVersion' $(JSONFILE))
 	PLUGIN_DESCRIPTION=$(shell jq -r '.PluginDescription' $(JSONFILE))
