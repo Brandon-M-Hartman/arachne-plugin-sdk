@@ -1,4 +1,4 @@
-module demo
+module github.com/getarachne/arachne-plugin-sdk/cmd/demo
 
 go 1.21.3
 

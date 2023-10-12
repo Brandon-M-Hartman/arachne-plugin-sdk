@@ -1,4 +1,4 @@
-module arachne-plugin
+module github.com/getarachne/arachne-plugin-sdk/cmd/arachne-plugin
 
 go 1.21.3
 
