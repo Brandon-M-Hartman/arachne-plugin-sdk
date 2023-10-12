@@ -3,7 +3,7 @@ package plugin_requirements
 import (
 	"encoding/json"
 
-	main "github.com/getarachne/arachne-plugin-sdk/cmd/arachne-plugin"
+	"github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/plugin_config"
 	arachne_plugin_scaffold "github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/scaffold"
 	"github.com/wapc/wapc-guest-tinygo"
 )
@@ -41,12 +41,12 @@ func DescribePlugin(payload []byte) ([]byte, error) {
 
 	// Create a new instance of the PluginInfo message
 	info := &arachne_plugin_scaffold.PluginInfo{
-		PluginName:        main.PluginName,
-		PluginDevIdentity: PluginDevIdentity,
-		PluginUrl:         PluginUrl,
-		PluginVersion:     PluginVersion,
-		PluginBuildTime:   PluginBuildTime,
-		PluginDescription: PluginDescription,
+		PluginName:        plugin_config.PluginName,
+		PluginDevIdentity: plugin_config.PluginDevIdentity,
+		PluginUrl:         plugin_config.PluginUrl,
+		PluginVersion:     plugin_config.PluginVersion,
+		PluginBuildTime:   plugin_config.PluginBuildTime,
+		PluginDescription: plugin_config.PluginDescription,
 		PluginFunctions:   funcNames,
 	}
 

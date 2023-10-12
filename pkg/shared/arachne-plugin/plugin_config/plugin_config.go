@@ -1,4 +1,4 @@
-package main
+package plugin_config
 
 var PluginName string
 

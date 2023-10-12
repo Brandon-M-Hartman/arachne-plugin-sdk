@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/getarachne/arachne-plugin-sdk/pkg/plugin_requirements"
+	"github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/plugin_requirements"
 	wapc "github.com/wapc/wapc-guest-tinygo"
 )
 
@@ -11,7 +11,6 @@ func main() {
 	// Add functions to the slice. Whenever we write a new function, we need to add it here.
 	plugin_requirements.Arachne_Plugin_Register.Funcs = append(plugin_requirements.Arachne_Plugin_Register.Funcs, Hello)
 	plugin_requirements.Arachne_Plugin_Register.Funcs = append(plugin_requirements.Arachne_Plugin_Register.Funcs, Goodbye)
-
 	// Only put non-mandatory functions here, the mandatory ones are implemented in ImplementRequiredFunctions, called below.
 	plugin_requirements.Arachne_Plugin_Register.FuncMap = wapc.Functions{
 		"Hello":   Hello,

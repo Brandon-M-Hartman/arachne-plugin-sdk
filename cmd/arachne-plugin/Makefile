@@ -22,6 +22,11 @@ endif
 
 build: build-binary
 
+update-mods:
+	@echo "Updating plugin go.mod..."
+	@go mod tidy
+	@go get -u ./...
+
 build-binary:
 	@echo "----------"
 	@echo "Building Plugin with TinyGo"
@@ -30,11 +35,11 @@ build-binary:
 	@echo "----------"
 	@echo "Starting WASM build..."
 	@tinygo build -o ../../bin/wasm/arachne-plugin.wasm -scheduler=none --no-debug \
-	-ldflags="-X 'main.PluginName=$(PLUGIN_NAME)' \
-			-X 'main.PluginDevIdentity=$(DEVELOPER_IDENTITY)' \
-			-X 'main.PluginUrl=$(PLUGIN_URL)' \
-			-X 'main.PluginVersion=$(PLUGIN_VERSION)' \
-			-X 'main.PluginDescription=$(PLUGIN_DESCRIPTION)' \
-			-X 'main.PluginBuildTime=$(PLUGIN_BUILDTIME)'" \
+	-ldflags="-X 'github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/plugin_config.PluginName=$(PLUGIN_NAME)' \
+			-X 'github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/plugin_config.PluginDevIdentity=$(DEVELOPER_IDENTITY)' \
+			-X 'github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/plugin_config.PluginUrl=$(PLUGIN_URL)' \
+			-X 'github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/plugin_config.PluginVersion=$(PLUGIN_VERSION)' \
+			-X 'github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/plugin_config.PluginDescription=$(PLUGIN_DESCRIPTION)' \
+			-X 'github.com/getarachne/arachne-plugin-sdk/pkg/shared/arachne-plugin/plugin_config.PluginBuildTime=$(PLUGIN_BUILDTIME)'" \
 	-target=wasi ./
 	@echo "WASM build finished!"
