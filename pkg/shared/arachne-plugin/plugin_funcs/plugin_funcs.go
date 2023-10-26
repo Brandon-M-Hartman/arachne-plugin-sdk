@@ -19,10 +19,10 @@ import (
 )
 
 // Invoke and return data from a validated plugin
-func InvokePluginByInstance(instance *wapc.Instance, input string, function string) ([]byte, error) {
+func InvokePluginByInstance(instance *wapc.Instance, input []byte, function string) ([]byte, error) {
 
 	// Invoke the function in the wasm module with the input as argument
-	result, err := (*instance).Invoke(context.Background(), function, []byte(input))
+	result, err := (*instance).Invoke(context.Background(), function, input)
 
 	// Check for errors in invoking the function
 	if err != nil {
@@ -124,7 +124,7 @@ func ValidatePlugin(p *arachne_plugin_scaffold.ArachnePlugin) error {
 	instance := p.Instance
 
 	// Invoke the function in the wasm module with the input as argument
-	resp, err := InvokePluginByInstance(instance, "", "DescribePlugin")
+	resp, err := InvokePluginByInstance(instance, []byte(""), "DescribePlugin")
 
 	// Create a new instance of the PluginInfo message
 	info := &arachne_plugin_scaffold.PluginInfo{}
@@ -170,9 +170,10 @@ func ValidatePlugin(p *arachne_plugin_scaffold.ArachnePlugin) error {
 	slog.Debug("Plugin URL: " + info.PluginUrl)
 	slog.Debug("Plugin Version: " + info.PluginVersion)
 	slog.Debug("Plugin Description: " + info.PluginDescription)
-	for _, function := range info.PluginFunctions {
-		sanitizedFunction := html.EscapeString(function)
-		slog.Debug("Available Plugin Function: " + sanitizedFunction)
+	for i, function := range info.PluginFunctions {
+		// Sanitize the function name
+		info.PluginFunctions[i] = html.EscapeString(function)
+		slog.Debug("Available Plugin Function: " + info.PluginFunctions[i])
 	}
 
 	p.PluginInfo = info
